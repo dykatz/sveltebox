@@ -1,8 +1,17 @@
 <script>
-  import NavSearch from "./NavSearch.svelte";
+  import { goto } from "$app/navigation";
 
-  /** @type boolean */
+  /** @type {boolean} */
   let showBar = false;
+
+  /** @type {string} */
+  let searchQuery = "";
+
+  /** @type {(event: Event) => none} */
+  const onSearch = (event) => {
+    event.preventDefault();
+    goto(`/search?query=${searchQuery}`);
+  };
 </script>
 
 <div class="w3-bar w3-black">
@@ -11,9 +20,14 @@
     Notifications
   </a>
 
-  <div class="w3-bar-item w3-button w3-hide-small w3-right">
-    <NavSearch />
-  </div>
+  <form on:submit={onSearch}>
+    <input
+      class="w3-input w3-bar-item w3-hide-small w3-right"
+      type="text"
+      placeholder="Search"
+      bind:value={searchQuery}
+    />
+  </form>
   <div class="w3-bar-item w3-button w3-hide-small w3-right">Post</div>
 
   <div class="w3-dropdown-hover w3-hide-small w3-right">
@@ -30,8 +44,8 @@
 </div>
 
 <div
-  class="w3-bar-block w3-black w3-hide w3-hide-medium w3-hide-large"
-  class:w3-show={showBar}
+  class="w3-bar-block w3-black w3-hide-medium w3-hide-large"
+  class:w3-hide={!showBar}
 >
   <a href="/notifications" class="w3-bar-item w3-button">Notifications</a>
 
@@ -44,5 +58,12 @@
     </div>
   </div>
 
-  <div class="w3-bar-item w3-button"><NavSearch /></div>
+  <form on:submit={onSearch}>
+    <input
+      class="w3-input w3-bar-item w3-border"
+      type="text"
+      placeholder="Search"
+      bind:value={searchQuery}
+    />
+  </form>
 </div>
