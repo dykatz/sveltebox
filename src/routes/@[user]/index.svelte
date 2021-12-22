@@ -10,7 +10,7 @@
 </script>
 
 <script>
-  /** @type string */
+  /** @type {string} */
   export let user;
 </script>
 
